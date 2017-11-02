@@ -36,4 +36,4 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 
 
 ## ライセンス
-[MIT](https://accounts.google.com/https://github.com/softbank-developer/gsuite_with_watson/blob/master/LICENSE)
+[MIT](https://github.com/softbank-developer/gsuite_with_watson/blob/master/LICENSE)
