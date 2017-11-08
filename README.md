@@ -2,13 +2,16 @@ G Suite with Watson
 ============================================
 GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）とIBM Watson™を組み合わせた業務支援ツールのテンプレート集です。メールやフォーム、RSS等からスプレッドシート上に蓄積したデータを、Watsonへの学習や、Watsonを活用した処理に利用できます。
 
-テンプレートは主に利用Watson APIと、データ収集元により分かれます。現状、Watson APIはNatural Language Classifier（NLC）のみに対応しています。各テンプレートには次のコンポーネントが含まれます。
+テンプレートはデータ収集元と、利用Watson APIにより分かれます。各テンプレートには次のコンポーネントが含まれます。
 
 - データの収集と動作設定用Google スプレッドシート  
-- IBM Watson™と連携してデータを処理するためのGASスクリプト
-
+- IBM Watson™と連携してデータを処理するためのGASスクリプト  
+	現状、Watson APIはNatural Language Classifier（NLC）のみに対応しています。
 
 ## 各テンプレート概要
+- ### chat
+	- GAS上で稼働する問い合わせ対応を行うWEBアプリケーションからのデータを収集・処理
+	- Natural Language Classifierを利用した分類
 - ### form
 	- Google フォームからのデータを収集・処理
 	- Natural Language Classifierを利用した分類
@@ -18,12 +21,19 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 - ### rss
 	- RSSからのデータを収集・処理
 	- Natural Language Classifierを利用した分類
+- ### spreadsheet
+	- Googleスプレッドシートで収集されるデータを処理
+	- Natural Language Classifierを利用した分類
+
 
 ## 環境構築
 各テンプレートは、Googleドライブ上で、スプレッドシートの形で公開されています。各スプレッドシートには、対応するGASスクリプトも内包されています。導入のための最も簡単な方法は、このGoogle Drive上で公開されているスプレッドシートをコピーする方法です。各スプレッドシートのリンクは下を参照してください。
 
 なんらかの理由で上記の方法が取れない場合は、手動で環境を構築するための手順も用意しています。具体的な手順について
 は下のリンク先よりご確認ください。
+- ### chat
+	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
+	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/chat)
 - ### form
 	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/form)
@@ -33,7 +43,12 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 - ### rss
 	- [Googleドライブから環境をコピー](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
+- ### spreadsheet
+	- [Googleドライブから環境をコピー](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
+	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/spreadsheet)
+
+
 
 
 ## ライセンス
-[MIT](https://github.com/softbank-developer/gsuite_with_watson/blob/master/LICENSE)
+[MIT](https://accounts.google.com/https://github.com/softbank-developer/gsuite_with_watson/blob/master/LICENSE)
