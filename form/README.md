@@ -7,12 +7,11 @@ Googleフォームでは回答をスプレッドシートに記録すること�
 
 ![img](https://github.com/softbank-developer/gsuite_with_watson/blob/master/form/readme_images/data.png)
 
-- `タイムスタンプ〜質問3`：フォームからの結果
+- `タイムスタンプ〜質問3`：フォームからの回答
 - `分類器[1-3]:手入力`: 手動による分類(NLCの学習対象列)
 - `分類器[1-3]:Watson`: NLCによる分類
 - `分類器[1-3]:確信度`: NLCの確信度(0.0〜1.0)
-- `分類器[1-3]:処理日時`: NLCによる分類を実施した日時
-1つのNLCで3つまでの分類器を利用します。
+- `分類器[1-3]:処理日時`: NLCによる分類を実施した日時  
 1つのNLCで3つまでの分類器を利用します。
 
 
@@ -48,6 +47,7 @@ sheetsディレクトリ内に、サンプルのシートを置いています�
 	(分類器)
 	- `Classifier ID`: NLCの分類器のID(学習後自動で挿入されます)
 	- `ステータス`: NLCのステータス  
+
 	![img](https://github.com/softbank-developer/gsuite_with_watson/blob/master/form/readme_images/config.png)
 
 3. "データ"シートの作成  

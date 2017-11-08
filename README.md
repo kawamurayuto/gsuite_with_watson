@@ -4,7 +4,7 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 
 テンプレートはデータ収集元と、利用Watson APIにより分かれます。各テンプレートには次のコンポーネントが含まれます。
 
-- データの収集と動作設定用Google スプレッドシート  
+- データの収集と動作設定用Googleスプレッドシート  
 - IBM Watson™と連携してデータを処理するためのGASスクリプト  
 	現状、Watson APIはNatural Language Classifier（NLC）のみに対応しています。
 
@@ -41,10 +41,10 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/gmail)
 - ### rss
-	- [Googleドライブから環境をコピー](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
+	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
 - ### spreadsheet
-	- [Googleドライブから環境をコピー](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
+	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/spreadsheet)
 
 

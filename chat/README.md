@@ -1,5 +1,5 @@
 ## 概要
-Googl Apps Scriptsで構築した問い合わせ対応を行うWEBアプリケーションです。問い合わせデータはスプレッドシートで管理されます。各データはNatural Language Classifier(NLC)を利用して任意のクラスタに分類させることができます。分類結果に任意の応答メッセージを結びつけることもできるため、自然な会話を演出すことが可能となります。
+Googl Apps Scriptsで構築した問い合わせ対応を行うWEBアプリケーションです。問い合わせデータはスプレッドシートで管理されます。各データはNatural Language Classifier(NLC)を利用して任意のクラスタに分類させることができます。分類結果に任意の応答メッセージを結びつけることもできるため、自然な会話を演出することが可能となります。
 
 ![img](https://github.com/softbank-developer/gsuite_with_watson/blob/master/chat/readme_images/web.png)
 
@@ -12,7 +12,7 @@ Googl Apps Scriptsで構築した問い合わせ対応を行うWEBアプリケ�
 - `BOT応答メッセージ`: BOTの応答
 - `分類器[1-3]:手入力`: Watsonに学習させるの手動での分類
 - `分類器[1-3]:Watson`: Watsonによる分類
-- `分類器[1-3]:処理日時`: Watsonが分類した日時
+- `分類器[1-3]:処理日時`: Watsonが分類した日時  
 1つのNLCで3つまでの分類器を利用します。
 
 
@@ -49,7 +49,8 @@ sheetsディレクトリ内に、サンプルのシートを置いています�
 
 	(分類器)
 	- `Classifier ID`: NLCの分類器のID(学習後自動で挿入されます)
-	- `ステータス`: NLCのステータス  
+	- `ステータス`: NLCのステータス
+
 	![img](https://github.com/softbank-developer/gsuite_with_watson/blob/master/chat/readme_images/config.png)
 
 3. "応答"シートの作成  
@@ -58,6 +59,7 @@ sheetsディレクトリ内に、サンプルのシートを置いています�
 	- `分類器[1-3]:Watson`: 応答メッセージを決める条件となるWatsonの分類
 	- `分類器[1-3]:確信度`: 分類対象と判定するための確信度(この数値以上が対象)
 	- `応答メッセージ`: 条件が合致した場合の応答に使うメッセージ        
+
 	![img](https://github.com/softbank-developer/gsuite_with_watson/blob/master/chat/readme_images/answer.png)
 
 4. "データ"シートの作成   
@@ -84,7 +86,7 @@ sheetsディレクトリ内に、サンプルのシートを置いています�
 
 ## 使い方
 1. WEBアプリケーションの起動  
-スプレッドシートのメニューからスクリプト エディタを開き、スクリプト エディタからウェブアプリケーションとして公開します。
+スプレッドシートのメニューからスクリプト エディタを開き、スクリプト エディタからWEBアプリケーションとして公開します。
 	- `ツール` -> `スクリプト エディタ`
 	- `公開` -> `ウェブアプリケーションとして導入`  
 	このWEBアプリケーションでの質問と回答がスプレッドシートのデータシートで管理されます。

@@ -49,7 +49,8 @@ Google ドライブにてスプレッドシートとGaoogle スプレッドシ�
 
 	(分類器)
 	- `Classifier ID`: NLCの分類器のID(学習後自動で挿入されます)
-	- `ステータス`: NLCのステータス  
+	- `ステータス`: NLCのステータス
+
 	![img](https://github.com/softbank-developer/gsuite_with_watson/blob/master/gmail/readme_images/config.png)
 
 3. "データ"シートの作成  
