@@ -32,19 +32,19 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 なんらかの理由で上記の方法が取れない場合は、手動で環境を構築するための手順も用意しています。具体的な手順について
 は下のリンク先よりご確認ください。
 - ### chat
-	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
+	- [Googleドライブから環境をコピー](https://docs.google.com/spreadsheets/d/1pUk2PrEO56QuyUnYiJgutjx5OTuPYmDh4JtLRnngbg0)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/chat)
 - ### form
-	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
+	- [Googleドライブから環境をコピー](https://docs.google.com/spreadsheets/d/1_ZK3d38NN984_1Z2QhwLHyuE2yT2gh4LefmQpn8W_kE)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/form)
 - ### gmail
-	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
+	- [Googleドライブから環境をコピー](https://docs.google.com/spreadsheets/d/18KObxlbLQL5W-ENQOWKr_cDB4EGV52KpybjMAIKfEYo)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/gmail)
 - ### rss
-	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
+	- [Googleドライブから環境をコピー](https://docs.google.com/spreadsheets/d/1MiOHGjc6o8vW3i0MZ7liiEgctxWPtJKgxVQaLEVXjM8)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/rss)
 - ### spreadsheet
-	- [Googleドライブから環境をコピー](https://drive.google.com/drive/folders/0B_L8p3LDeJqLb2tNVXVXMFpKcjg)
+	- [Googleドライブから環境をコピー](https://docs.google.com/spreadsheets/d/1-Ikcm89xwDVj9P_sJFF34Dl6MoLWx-wgw-Siq_Tl6mE)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/spreadsheet)
 
 
