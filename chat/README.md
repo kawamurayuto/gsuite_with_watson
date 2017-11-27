@@ -109,6 +109,9 @@ sheetsディレクトリ内に、サンプルのシートを置いています�
 WEBから質問を投げ、意図した応答メッセージが返されるか確認します。
 
 
+## 詳細資料
+https://softbank-developer.github.io/docs/
+
 
 ## ライセンス
 [MIT](https://accounts.google.com/https://github.com/softbank-developer/gsuite_with_watson/blob/master/rss/LICENSE)

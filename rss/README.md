@@ -99,5 +99,9 @@ sheetsディレクトリ内に、サンプルのシートを置いています�
 	分類結果はデータを記録するシートの分類器[1-3]:Watsonに記録されます。
 
 
+## 詳細資料
+https://softbank-developer.github.io/docs/
+
+
 ## ライセンス
 [MIT](https://accounts.google.com/https://github.com/softbank-developer/gsuite_with_watson/blob/master/rss/LICENSE)
