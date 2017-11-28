@@ -356,7 +356,7 @@ function MAILUTIL_update_data(mail_set) {
     var sheet = SELF_SS.getSheetByName(mail_set.ws_name);
 
     if (sheet === null) {
-        sheet = ss.insertSheet(mail_set.ws_name);
+        sheet = SELF_SS.insertSheet(mail_set.ws_name);
     }
 
     var lastRow = sheet.getLastRow();
