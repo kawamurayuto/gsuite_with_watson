@@ -50,7 +50,8 @@ GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）�
 	- [Googleドライブから環境をコピー](https://docs.google.com/spreadsheets/d/1-Ikcm89xwDVj9P_sJFF34Dl6MoLWx-wgw-Siq_Tl6mE)
 	- [手動で環境構築](https://github.com/softbank-developer/gsuite_with_watson/tree/master/spreadsheet)
 
-
+より、詳細なドキュメントは下記のリンクよりご確認ください。  
+https://softbank-developer.github.io/docs/
 
 
 ## ライセンス
