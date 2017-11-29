@@ -2,7 +2,7 @@ G Suite with Watson
 ============================================
 GoogleのG Suite（Gmail、フォーム、スプレッドシート、GAS等）とIBM Watson™を組み合わせた業務支援ツールのテンプレート集です。メールやフォーム、RSS等からスプレッドシート上に蓄積したデータを、Watsonへの学習や、Watsonを活用した処理に利用できます。
 
-![img](https://github.com/softbank-developer/docs/blob/master/images/watson_gsuite_logo.png?raw=true)
+[](![img](https://github.com/softbank-developer/docs/blob/master/images/watson_gsuite_logo.png?raw=true))
 
 テンプレートはデータ収集元と、利用Watson APIにより分かれます。各テンプレートには次のコンポーネントが含まれます。
 
