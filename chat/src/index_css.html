@@ -1,0 +1,479 @@
+<style type="text/css">
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.errorMsg {
+    font-weight: bold;
+    color: red;
+    white-space: pre-wrap;
+}
+
+.header-text {
+    color: #FF7832;
+    font-weight: 500;
+    margin-top: 2rem;
+    padding-left: 15px;
+}
+
+.loading {
+    margin-top: -2rem;
+    z-index: 100;
+}
+
+.mar10r {
+    margin-left: 10px;
+}
+
+#loading {
+    width: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dialog-name-span {
+    font-weight: bold;
+}
+
+.conversation-div {
+    margin-bottom: 20px;
+}
+
+.chat-human {
+    text-align: right;
+}
+
+.chat-watson {
+    text-align: left;
+}
+
+#name {
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    padding-left: 0px;
+}
+
+#file {
+    border: 0px;
+}
+
+.new-dialog-container {
+    border: 1px solid #e6e7e8;
+    cursor: pointer;
+    padding: 1.2rem;
+    margin-top: 2rem;
+}
+
+.new-dialog-container-loading {
+    margin-top: 10rem;
+    margin-bottom: 11.1rem;
+}
+
+.new-dialog-container:hover {
+    border: 3px solid #00B2EF;
+}
+
+.dialog-flow-title:hover {
+    color: #00B2EF;
+}
+
+.selected {
+    border: 1px solid #00B2EF;
+}
+
+.new-dialog-input-container {
+    margin: 6.75rem 0;
+}
+
+.create-btn:hover {
+    color: #00B2EF;
+    background-color: #fff;
+    border: 1px solid #00B2EF;
+}
+
+.dialog-flow-title {
+    text-align: center;
+    margin: 13rem 0;
+    line-height: 0px;
+    font-size: 41px;
+}
+
+.exist-dialog-flow-title {
+    text-align: center;
+    margin: 13rem 0 11.2rem;
+    line-height: 0px;
+}
+
+.new-dialog-flow-content {
+    display: none;
+}
+
+.dialog-links {
+    float: right;
+}
+
+.dialogs-loading {
+    margin-top: 11rem;
+}
+
+.dialogs-error {
+    margin-top: 11rem;
+}
+
+.chat-watson {
+    width: 85%;
+    float: left;
+    border-radius: 10px;
+    position: relative;
+    display: inline-block;
+    min-width: 115px;
+    /* height: 40px; */
+    line-height: 34px;
+    color: #222222;
+    text-align: left;
+    background: #e6e7e8;
+    border: 3px solid #e6e7e8;
+    z-index: 0;
+}
+
+.chat-watson:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    margin-top: -9px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 9px 9px 9px 0;
+    border-color: transparent #e6e7e8 transparent transparent;
+    z-index: 0;
+}
+
+.chat-watson:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -12px;
+    margin-top: -10px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #e6e7e8 transparent transparent;
+    z-index: -1;
+}
+
+.chat-human {
+    border-radius: 10px;
+    float: right;
+    position: relative;
+    display: inline-block;
+    width: 51%;
+    min-width: 115px;
+    height: 40px;
+    line-height: 34px;
+    color: #ffffff;
+    text-align: center;
+    background: #388FFF;
+    border: 3px solid #388FFF;
+    z-index: 0;
+}
+
+.chat-human:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -8px;
+    margin-top: -9px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 9px 0 9px 9px;
+    border-color: transparent transparent transparent #388FFF;
+    z-index: 0;
+}
+
+.chat-human:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -12px;
+    margin-top: -10px;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #388FFF;
+    z-index: -1;
+}
+
+.conversation-well {
+    min-height: 300px;
+}
+
+.no-padding-right {
+    padding-right: 0!important;
+}
+
+.no-padding-left {
+    padding-left: 0!important;
+}
+
+#response-input {
+    border: 3px solid #e6e7e8;
+    height: 36px;
+}
+
+#send-btn {
+    border: 3px solid #e6e7e8;
+}
+
+.conversation-flow-container {
+    border: 3px solid #e6e7e8;
+    /*background-color: #5a5a5a;*/
+    padding: 1rem 0;
+}
+
+.conversation-div {
+    background-color: #FFFFFF;
+    /*background-image: url("../images/mizuiro.png");*/
+    /*-moz-background-size:100% auto;
+background-size:100% auto;*/
+    padding-bottom: 2rem;
+    margin-bottom: 0;
+}
+
+.margin-bottom {
+    margin-bottom: 3rem!important;
+}
+
+.information-container {
+    margin-bottom: 20px;
+    color: #e0e0e0;
+}
+
+.profile-container {
+    color: #e0e0e0;
+}
+
+.green-title {
+    color: #222222;
+}
+
+.blue-title {
+    color: #388FFF;
+}
+
+.glay-title {
+    color: #222222;
+}
+
+.white-title {
+    color: #ffffff;
+}
+
+<!-- -->.bs-component {
+    position: relative;
+}
+
+.demoSize {
+    font-size: 14px;
+    /*DEMO*/
+}
+
+.textEllipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+div#headerArea {
+    position: fixed !important;
+    position: absolute;
+    background-color: #000088;
+    color: #FFF;
+    top: 0;
+    height: 50px;
+    left: 0;
+    width: 80%;
+    z-index: 2;
+}
+
+div#conversation_field {
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+input.btn {
+    background-color: #000088;
+    color: #FFFFFF;
+}
+
+@media ( min-width: 768px) {
+    body {
+        padding-top: 20px;
+        padding-bottom: 10%;
+    }
+    div#footerArea {
+        position: fixed !important;
+        position: absolute;
+        background-color: #FFFFFF;
+        bottom: 0;
+        height: 100px;
+        padding-top: 10px;
+        padding-right: 10%;
+        left: 0;
+        width: 80vw;
+        z-index: 1;
+    }
+    #QuestionText {
+        width: 50vw;
+        margin-left: 1%;
+    }
+}
+
+/* balloon common */
+
+div.balloon-wrapper {
+    width: 500px;
+    margin: 15px auto;
+}
+
+div.balloon-wrapper::after {
+    clear: both;
+    content: "";
+    display: block;
+    line-height: 0;
+}
+
+p.balloon-left, p.balloon-right {
+    position: relative;
+    z-index: 1;
+    max-width: 80%;
+    min-width: 10%;
+    margin: 15px auto;
+    padding: 13px;
+    background-color: #fff;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+p.balloon-left::before, p.balloon-right::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+}
+
+p.balloon-left::after, p.balloon-right::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+}
+
+/* balloon left */
+
+p.balloon-left {
+    float: left;
+    border-color: #EEEEEE;
+    background-color: #EEEEEE;
+    overflow: hidden;
+    width: 100%;
+}
+
+p.balloon-left::before {
+    left: -31px;
+    border-right: 15px solid #EEEEEE;
+}
+
+p.balloon-left::after {
+    left: -26px;
+    border-right: 15px solid #EEEEEE;
+}
+
+/* balloon right */
+
+p.balloon-right {
+    float: right;
+    border-color: #CBFFD3;
+    background-color: #CBFFD3;
+    color: #000000;
+}
+
+p.balloon-right::before {
+    right: -31px;
+    border-left: 15px solid #CBFFD3;
+}
+
+p.balloon-right::after {
+    right: -26px;
+    border-left: 15px solid #CBFFD3;
+}
+
+.balloon-watson {
+    width: 100%;
+    margin: 1.5em 0;
+    overflow: hidden;
+}
+
+.balloon-watson .faceicon {
+    float: left;
+    margin-right: -90px;
+    width: 80px;
+}
+
+.balloon-watson .faceicon img {
+    width: 100%;
+    height: auto;
+    /*border-radius: 50%;*/
+}
+
+.balloon-watson .chatting {
+    width: 100%;
+}
+
+.answer-watson {
+    display: inline-block;
+    position: relative;
+    margin: 5px 0 0 105px;
+    padding: 17px 13px;
+    border-radius: 12px;
+    background: #d7ebfe;
+}
+
+.answer-watson:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 18px;
+    left: -24px;
+    border: 12px solid transparent;
+    border-right: 12px solid #d7ebfe;
+}
+
+.answer-watson p {
+    margin: 0;
+    padding: 0;
+}
+
+</style>

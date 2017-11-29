@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>
+        <?!= data.title?>
+    </title>
+
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <?!= include('index_css'); ?>
+
+</head>
+
+<body class="claro">
+    <div class="row service-container">
+        <div class="col-lg-12 service-header">
+        </div>
+        <div class="row conversation-div">
+            <div class="container">
+                <div class="col-lg-6 col-md-6 col-xs-6 no-padding-right">
+                    <h4 class="green-title"><?!= data.bot_name ?></h4>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-6 text-right no-padding-left">
+                    <h4 class="blue-title"><?!= data.user_name?></h4>
+                </div>
+            </div>
+            <div class="container">
+                <div class="conversation-flow-container clearfix">
+                    <div class="col-lg-12 col-md-12 col-xs-12">
+                        <div class="conversation-well conversation-container clearfix">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="bs-component">
+                                        <div id="conversation_field"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-9 no-padding-right">
+                        <input id="QuestionText" type="text" onkeydown="go()" placeholder="質問を入力してください" class="form-control">
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-xs-3 no-padding">
+                        <button type="submit" id="send-btn" class="input-btn btn btn-block" onclick="askwatson($('#QuestionText').val());">送信</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+        var avatar = "<?= data.avatar_url ?>";
+        var start_msg = "<?= data.start_msg ?>";
+    </script>
+    <?!= include('index_js'); ?>
+
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+/* globals $ */
+/* globals window */
+/* globals google */
+/* globals avatar */
+/* globals start_msg */
+
+var answerNumber = 1;
+
+
+/**
+ * AskWatson
+ * @param  {String} p_question 質問
+ */
+function askwatson(p_question) {
+
+    $('#QuestionText')
+        .val("");
+
+    var l_question = p_question.replace(/\r?\n/g, "")
+        .replace(/\s/g, "");
+    if (l_question === "") {
+        return;
+    }
+
+    $('#send-btn')
+        .hide()
+        .prop("disabled", true);
+
+    var ht2 = '<div class="row">' +
+        '<div class="col-xs-12">' +
+        '<p class="balloon-right" id="watsonAnswer' + answerNumber + '">' +
+        l_question + '</p></div></div>';
+    $('#conversation_field')
+        .append(ht2);
+
+    google.script.run
+        .withSuccessHandler(function (response) {
+
+            for (var i = 0; i < response.response.length; i += 1) {
+
+                var answer = response.response[i].replace(/\n/g, "<br>");
+
+                var ht3 = '<div class="row">' +
+                    '<div class="balloon-watson">' +
+                    '<div class="faceicon">' +
+                    '<img src="' + avatar + '" width="50" alt=""></div>' +
+                    '<div class="chatting">' +
+                    '<div class="answer-watson"><p>' + answer + '</p></div></div></div></div>';
+                $('#conversation_field')
+                    .append(ht3);
+            }
+
+            $('#watsonAnswer' + answerNumber)[0].scrollIntoView(true);
+            $('#QuestionText')
+                .focus();
+            $('#send-btn')
+                .show()
+                .prop("disabled", false);
+
+            answerNumber += 1;
+        })
+        .withFailureHandler(function (err) {
+            var ht4 = '<div class="row">' +
+                '<div class="col-xs-12">' +
+                '<p class="balloon-left">' + err.message + '</p></div></div>';
+            $('#conversation_field')
+                .append(ht4);
+
+            $('#watsonAnswer' + answerNumber)[0].scrollIntoView(true);
+            $('#QuestionText')
+                .focus();
+            $('#send-btn')
+                .show()
+                .prop("disabled", false);
+        })
+        .CHATUTIL_send_message(l_question);
+}
+
+
+/**
+ * [Go
+ */
+function go() {
+    if (window.event.keyCode === 13 && $('#send-btn')
+        .prop('disabled') === false) {
+        $("#send-btn")
+            .click();
+    }
+}
+
+
+$(function () {
+    var ht1 = '<div class="row">' +
+        '<div class="balloon-watson">' +
+        '<div class="faceicon">' +
+        '<img src="' + avatar + '" width="50" alt=""></div>' +
+        '<div class="chatting">' +
+        '<div class="answer-watson"><p>' + start_msg + '</p></div></div></div></div>';
+
+    $('#conversation_field')
+        .append(ht1);
+
+    $('#searchFormId')
+        .on('submit', function () {
+            var question = $('#QuestionText')
+                .val();
+            askwatson(question);
+            return false;
+        });
+});
