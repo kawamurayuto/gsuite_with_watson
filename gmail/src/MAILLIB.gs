@@ -23,7 +23,6 @@
 
 // ----------------------------------------------------------------------------
 // グローバル変数
-/* globals CREDS */
 /* globals SELF_SS */
 /* globals SS_ID */
 /* globals CONFIG_SET */
@@ -32,6 +31,8 @@
 /* globals CONF_INDEX */
 /* globals CLFNAME_PREFIX */
 /* globals CLF_SEP */
+/* globals NOTIF_OPT */
+/* globals NLCUTIL_load_creds */
 /* globals NLCUTIL_escape_formula */
 /* globals NLCUTIL_open_dialog */
 /* globals NLCAPI_get_classifiers */
@@ -412,7 +413,7 @@ function MAILUTIL_update_data(mail_set) {
  * 取得メールをシートに配置する
  * @throws {Error} 過去分取得日数が不正です
  */
-function MAILUTIL_load_messages() {
+function MAILUTIL_load_messages() { // eslint-disable-line no-unused-vars
 
     var conf = MAILUTIL_load_config(CONFIG_SET);
 
@@ -590,6 +591,8 @@ function MAILUTIL_train_set(clf_no) {
 
     Logger.log("### MAILUTIL_train_set", clf_no);
 
+    var CREDS = NLCUTIL_load_creds();
+
     var conf = MAILUTIL_load_config(CONFIG_SET);
 
     var train_set = {
@@ -623,7 +626,9 @@ function MAILUTIL_train_set(clf_no) {
 /**
  * 全分類器を学習
  */
-function MAILUTIL_train_all() {
+function MAILUTIL_train_all() { // eslint-disable-line no-unused-vars
+
+    NLCUTIL_load_creds();
 
     var conf = MAILUTIL_load_config(CONFIG_SET);
 
@@ -659,9 +664,11 @@ function MAILUTIL_train_all() {
  * @throws      {Error}  学習・分類対象が不正です
  * @throws      {Error}  データシートが不明です
  */
-function MAILUTIL_classify_all() {
+function MAILUTIL_classify_all() { // eslint-disable-line no-unused-vars
 
     Logger.log("### MAILUTIL_classify_all");
+
+    var CREDS = NLCUTIL_load_creds();
 
     var conf = MAILUTIL_load_config(CONFIG_SET);
 
@@ -841,10 +848,13 @@ function MAILUTIL_classify_all() {
             }
         }
 
-        if (updates > 0) {
-            var record = sheet.getRange(conf.sheet_conf.start_row + cnt, 1, 1, lastCol)
-                .getValues();
-            NLCUTIL_check_notify(notif_set, record[0], upd_flg);
+        if (test_set.notif_opt === NOTIF_OPT.ON) {
+
+            if (updates > 0) {
+                var record = sheet.getRange(conf.sheet_conf.start_row + cnt, 1, 1, lastCol)
+                    .getValues();
+                NLCUTIL_check_notify(notif_set, record[0], upd_flg);
+            }
         }
     }
 

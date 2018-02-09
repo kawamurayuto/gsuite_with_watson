@@ -27,10 +27,10 @@
 /* globals CONFIG_SET */
 /* globals SS_ID */
 /* globals SELF_SS */
-/* globals CREDS */
 /* globals NB_CLFS */
 /* globals CLFNAME_PREFIX */
 /* globals CLF_SEP */
+/* globals NLCUTIL_load_creds */
 /* globals NLCUTIL_log_classify */
 /* globals NLCUTIL_log_train */
 /* globals NLCUTIL_select_clf */
@@ -62,7 +62,7 @@ var CONV_INDEX = {
  * LINE応答メッセージ用URL
  * @type {String}
  */
-var LINE_REPLY_URL = 'https://api.line.me/v2/bot/message/reply';
+var LINE_REPLY_URL = 'https://api.line.me/v2/bot/message/reply'; // eslint-disable-line no-unused-vars
 // ----------------------------------------------------------------------------
 
 
@@ -82,18 +82,11 @@ var LINE_REPLY_URL = 'https://api.line.me/v2/bot/message/reply';
  * @throws {Error}  NLCクレデンシャルが不明です
  * @throws {Error}  LINEクレデンシャルが不明です
  */
-function CHATUTIL_load_creds() {
+function CHATUTIL_load_creds() { // eslint-disable-line no-unused-vars
 
     var scriptProps = PropertiesService.getScriptProperties();
 
     var creds = {};
-    creds['url'] = scriptProps.getProperty('CREDS_URL');
-    creds['username'] = scriptProps.getProperty('CREDS_USERNAME');
-    creds['password'] = scriptProps.getProperty('CREDS_PASSWORD');
-
-    if (creds.username === null || creds.password === null) {
-        throw new Error('NLCクレデンシャルが不明です');
-    }
 
     creds['channel_access_token'] = scriptProps.getProperty('CHANNEL_ACCESS_TOKEN');
 
@@ -262,10 +255,11 @@ function CHATUTIL_expand_tags(p_temp, p_dict) {
 
     var xbody = p_temp;
     var buf = "";
-    for (var key in p_dict) {
-        buf = xbody.replace(new RegExp('\\[\\[#' + key + '\\]\\]', 'g'), p_dict[key]);
-        xbody = buf;
-    }
+    Object.keys(p_dict)
+        .forEach(function (key) {
+            buf = xbody.replace(new RegExp('\\[\\[#' + key + '\\]\\]', 'g'), p_dict[key]);
+            xbody = buf;
+        });
 
     xbody.match(new RegExp('\\[\\[#.+\\]\\]', 'g'));
 
@@ -372,7 +366,7 @@ function CHATUTIL_store_dialog(conv_set, res_classes) {
  * @param       {String} input   入力情報
  * @param       {String} res_msg 応答メッセージ
  */
-function CHATUTIL_store_reply(input, res_msg) {
+function CHATUTIL_store_reply(input, res_msg) { // eslint-disable-line no-unused-vars
 
     var timestamp = Utilities.formatDate(new Date(), "JST", "yyyy/MM/dd HH:mm:ss");
 
@@ -409,7 +403,7 @@ function CHATUTIL_store_reply(input, res_msg) {
  * @param       {String} input_text ユーザー入力
  * @return      {Object} 応答メッセージ
  */
-function CHATUTIL_send_message(input_text) {
+function CHATUTIL_send_message(input_text) { // eslint-disable-line no-unused-vars
 
     Logger.log("CHATUTIL_send message");
 
@@ -435,6 +429,41 @@ function CHATUTIL_send_message(input_text) {
         other_msg: conf.sheet_conf.other_msg,
         input_text: input_text,
     };
+
+    var CREDS;
+    var res_classes;
+    var msgs;
+    try {
+        CREDS = NLCUTIL_load_creds();
+    } catch (e) {
+        msgs = [];
+        msgs.push(conf.sheet_conf.error_msg);
+        conv_set.input_text = input_text;
+        conv_set.messages = msgs.join('\n');
+        conv_set.timestamp = timestamp;
+
+        res_classes = [
+            {
+                class_name: 'N/A',
+                confidence: 0,
+                timestamp: timestamp
+            },
+            {
+                class_name: 'N/A',
+                confidence: 0,
+                timestamp: timestamp
+            },
+            {
+                class_name: 'N/A',
+                confidence: 0,
+                timestamp: timestamp
+            },
+        ];
+        CHATUTIL_store_dialog(conv_set, res_classes);
+        return {
+            response: msgs,
+        };
+    }
 
     var log_set = {
         ss_id: SS_ID,
@@ -468,12 +497,6 @@ function CHATUTIL_send_message(input_text) {
                 description: "トレーニング中",
                 clf_id: clf.clf_id,
             });
-        } else if (clf.status === "Nothing") {
-            //NLCUTIL_log_classify(log_set, test_set, {
-            //   status: 900,
-            //    description: "分類器なし",
-            //    clf_id: "",
-            //});
         } else if (clf.status !== "Available") {
             NLCUTIL_log_classify(log_set, test_set, {
                 status: 800,
@@ -489,9 +512,9 @@ function CHATUTIL_send_message(input_text) {
     }
 
     // ３つの分類器にリクエストを投げる
-    var res_classes = [];
+    res_classes = [];
     var nlc_res;
-    var err_res;
+    //var err_res;
     var has_error = 0;
     for (var j = 0; j < NB_CLFS; j += 1) {
 
@@ -509,7 +532,7 @@ function CHATUTIL_send_message(input_text) {
 
         nlc_res = NLCAPI_post_classify(CREDS.username, CREDS.password, clf_ids[j].id, input_text);
         if (nlc_res.status !== 200) {
-            err_res = nlc_res;
+            //err_res = nlc_res;
             has_error = 2;
         } else {
             res_classes.push({
@@ -520,7 +543,7 @@ function CHATUTIL_send_message(input_text) {
         }
     }
 
-    var msgs = [];
+    msgs = [];
     if (has_error !== 0) {
         msgs.push(conf.sheet_conf.error_msg);
     } else {
@@ -552,6 +575,8 @@ function CHATUTIL_send_message(input_text) {
 function CHATUTIL_train(train_set, log_set) {
 
     var train_result;
+
+    var CREDS = NLCUTIL_load_creds();
 
     var clfs = NLCAPI_get_classifiers(CREDS.username, CREDS.password);
     if (clfs.status !== 200) {
@@ -672,7 +697,7 @@ function CHATUTIL_train_set(clf_no) {
 /**
  * 全分類器を学習
  */
-function CHATUTIL_train_all() {
+function CHATUTIL_train_all() { // eslint-disable-line no-unused-vars
 
     var SS_UI;
     try {
@@ -680,6 +705,8 @@ function CHATUTIL_train_all() {
     } catch (e) {
         SS_UI = null;
     }
+
+    var CREDS = NLCUTIL_load_creds()
 
     var conf = CHATUTIL_load_config(CONFIG_SET);
 

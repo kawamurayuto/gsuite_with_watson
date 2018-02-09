@@ -23,14 +23,13 @@
 
 // ----------------------------------------------------------------------------
 // グローバル
-/* globals NLCUTIL_load_creds */
 /* globals NLCUTIL_exec_check_clfs */
 
 /**
  * 分類器数
  * @type {Integer}
  */
-var NB_CLFS = 3;
+var NB_CLFS = 3; // eslint-disable-line no-unused-vars
 
 /**
      * 設定シートフィールドインデックス
@@ -55,7 +54,7 @@ var NB_CLFS = 3;
  * @property {Integer} notif_opt    通知オプション
  * @property {Integer} notif_ws     通知設定シート名
  */
-var CONF_INDEX = {
+var CONF_INDEX = { // eslint-disable-line no-unused-vars
     ws_name: 0,
     start_col: 1,
     start_row: 2,
@@ -89,11 +88,6 @@ var SELF_SS = SpreadsheetApp.getActiveSpreadsheet();
  */
 var SS_ID = SELF_SS.getId();
 
-/**
- * クレデンシャル情報
- * @type {Creds}
- */
-var CREDS = NLCUTIL_load_creds();
 
 /**
  * 設定メタデータ
@@ -110,7 +104,7 @@ var CREDS = NLCUTIL_load_creds();
  * @property {Integer} log_start_col   ログ開始列
  * @property {Integer} log_start_row   ログ開始行
  */
-var CONFIG_SET = {
+var CONFIG_SET = { // eslint-disable-line no-unused-vars
     ss_id: SS_ID,
     ws_name: '設定',
     st_start_row: 2,
@@ -132,7 +126,7 @@ var CONFIG_SET = {
  * <p>カスタムメニューを作成</p>
  * <p>分類器の状態を最新化</p>
  */
-function onOpen() {
+function onOpen() { // eslint-disable-line no-unused-vars
 
     var ui = SpreadsheetApp.getUi();
     ui.createMenu('Watson')

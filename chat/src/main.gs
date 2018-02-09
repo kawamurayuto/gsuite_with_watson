@@ -34,7 +34,7 @@
  * 分類器数
  * @type {Integer}
  */
-var NB_CLFS = 3;
+var NB_CLFS = 3; // eslint-disable-line no-unused-vars
 
 /**
  * 設定シートフィールドインデックス
@@ -63,7 +63,7 @@ var NB_CLFS = 3;
  * @property {Integer} avatar_url   アバターアイコンURL
  * @property {Integer} giveup_msg   テキスト以外のメッセージ
  */
-var CONF_INDEX = {
+var CONF_INDEX = { // eslint-disable-line no-unused-vars
     ws_name: 0,
     start_col: 1,
     start_row: 2,
@@ -100,12 +100,6 @@ var SELF_SS = SpreadsheetApp.getActiveSpreadsheet();
  * @type {String}
  */
 var SS_ID = SELF_SS.getId();
-
-/**
- * クレデンシャル情報
- * @type {Creds}
- */
-var CREDS = CHATUTIL_load_creds();
 
 /**
  * 設定メタデータ
@@ -145,7 +139,7 @@ var CONFIG_SET = {
  * @param  {String} filename ファイル名
  * @return {Object}          HtmlService
  */
-function include(filename) {
+function include(filename) { // eslint-disable-line no-unused-vars
     return HtmlService.createHtmlOutputFromFile(filename)
         .setSandboxMode(HtmlService.SandboxMode.IFRAME)
         .getContent();
@@ -156,10 +150,9 @@ function include(filename) {
 // ----------------------------------------------------
 /**
  * HTMLサービス
- * @param  {Event} e イベントパラメータ
  * @return {Object}   HTML
  */
-function doGet(e) {
+function doGet() { // eslint-disable-line no-unused-vars
 
     var conf = CHATUTIL_load_config(CONFIG_SET);
 
@@ -182,9 +175,8 @@ function doGet(e) {
 /**
  * LINE応答処理
  * @param  {Event} e イベントパラメータ
- * @return {JSON}   応答JSON
  */
-function doPost(e) {
+function doPost(e) { // eslint-disable-line no-unused-vars
 
     var conf = CHATUTIL_load_config(CONFIG_SET);
 
@@ -214,25 +206,33 @@ function doPost(e) {
 
     var url = LINE_REPLY_URL;
 
-    UrlFetchApp.fetch(url, {
-        headers: {
-            "Content-Type": 'application/json; charset=UTF-8',
-            Authorization: 'Bearer ' + CREDS.channel_access_token,
-        },
-        method: 'post',
-        payload: JSON.stringify({
-            replyToken: reply_token,
-            messages: [{
-                type: 'text',
-                text: res_msg,
-            }],
-        }),
-    });
+    var CREDS;
+    try {
+        CREDS = CHATUTIL_load_creds();
+    } catch (err) {
+        CHATUTIL_store_reply('#ERROR', err);
+        return;
+    }
 
-    return ContentService.createTextOutput(JSON.stringify({
-            content: 'post ok'
-        }))
-        .setMimeType(ContentService.MimeType.JSON);
+    try {
+        UrlFetchApp.fetch(url, {
+            headers: {
+                "Content-Type": 'application/json; charset=UTF-8',
+                Authorization: 'Bearer ' + CREDS.channel_access_token,
+            },
+            method: 'post',
+            payload: JSON.stringify({
+                replyToken: reply_token,
+                messages: [{
+                    type: 'text',
+                    text: res_msg,
+                }],
+            }),
+        });
+    } catch (err) {
+        CHATUTIL_store_reply('#ERROR', err);
+    }
+
 }
 // ----------------------------------------------------
 
@@ -241,7 +241,7 @@ function doPost(e) {
 /**
  * オープン時処理
  */
-function onOpen() {
+function onOpen() { // eslint-disable-line no-unused-vars
 
     var ui = SpreadsheetApp.getUi();
     ui.createMenu('Watson')
@@ -256,6 +256,9 @@ function onOpen() {
 }
 // ----------------------------------------------------
 
-function test_send() {
+/**
+ * テスト用メッセージ送信
+ */
+function test_send() { // eslint-disable-line no-unused-vars
     CHATUTIL_send_message("電話番号を教えて");
 }

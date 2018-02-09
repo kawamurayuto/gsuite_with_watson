@@ -23,7 +23,6 @@
 
 // ----------------------------------------------------------------------------
 // グローバル変数
-/* globals CREDS */
 /* globals SS_ID */
 /* globals SELF_SS */
 /* globals CONFIG_SET */
@@ -38,7 +37,7 @@
  * @property {String} TRAINING トレーニング中
  * @property {String} NOTHING  利用不可
  */
-var NLCAPI_CLF_STATUS = {
+var NLCAPI_CLF_STATUS = {   // eslint-disable-line no-unused-vars
     AVAILABLE: 'Available',
     TRAINING: 'Training',
     NOTHING: 'Nothing',
@@ -66,6 +65,7 @@ var NOTIF_OPT = {
     ON: 'On',
     OFF: 'Off',
 };
+
 
 /**
  * 通知ルールレコードのフィールドインデックス
@@ -114,7 +114,7 @@ var NOTIF_INDEX = {
  * @return {Creds} クレデンシャル情報
  * @throws {Error}  クレデンシャルが不明です
  */
-function NLCUTIL_load_creds() {
+function NLCUTIL_load_creds() { // eslint-disable-line no-unused-vars
 
     var scriptProps = PropertiesService.getScriptProperties();
 
@@ -352,7 +352,7 @@ function NLCUTIL_load_notif_rules(config_set) {
  * @param       {String} text 対象テキスト
  * @return      {String} 編集結果
  */
-function NLCUTIL_escape_formula(text) {
+function NLCUTIL_escape_formula(text) { // eslint-disable-line no-unused-vars
 
     var first = text.substring(0, 1);
 
@@ -779,9 +779,11 @@ function NLCUTIL_open_dialog(title, msg, buttons) {
  * イベント実行用分類処理
  * @throws {Error} データシートが不明
  */
-function NLCUTIL_classify_all() {
+function NLCUTIL_classify_all() { // eslint-disable-line no-unused-vars
 
     Logger.log('### NLCUTIL_classify_all');
+
+    var CREDS = NLCUTIL_load_creds();
 
     var conf = NLCUTIL_load_config(CONFIG_SET);
 
@@ -832,6 +834,7 @@ function NLCUTIL_classify_all() {
         start_row: conf.sheet_conf.start_row,
         end_row: -1,
         text_col: conf.sheet_conf.text_col,
+        notif_opt: conf.notif_conf.option,
         notif_set: notif_set,
     };
 
@@ -945,10 +948,14 @@ function NLCUTIL_classify_all() {
             }
         }
 
-        if (updates > 0) {
-            var record = sheet.getRange(conf.sheet_conf.start_row + cnt, 1, 1, lastCol)
-                .getValues();
-            NLCUTIL_check_notify(notif_set, record[0], upd_flg);
+        if (test_set.notif_opt === NOTIF_OPT.ON) {
+
+            if (updates > 0) {
+
+                var record = sheet.getRange(conf.sheet_conf.start_row + cnt, 1, 1, lastCol)
+                    .getValues();
+                NLCUTIL_check_notify(notif_set, record[0], upd_flg);
+            }
         }
     }
     // 分類
@@ -1008,6 +1015,8 @@ function NLCUTIL_exec_check_clfs() {
         start_col: CONFIG_SET.clfs_start_col,
         start_row: CONFIG_SET.clfs_start_row,
     };
+
+    var CREDS = NLCUTIL_load_creds();
 
     NLCUTIL_check_classifiers(clf_set, CREDS);
 }
@@ -1155,6 +1164,8 @@ function NLCUTIL_train_set(clf_no) {
 
     Logger.log('### NLCUTIL_train_set', clf_no);
 
+    var CREDS = NLCUTIL_load_creds();
+
     var conf = NLCUTIL_load_config(CONFIG_SET);
 
     var train_set = {
@@ -1187,7 +1198,9 @@ function NLCUTIL_train_set(clf_no) {
 /**
  * イベント実行用学習処理
  */
-function NLCUTIL_train_all() {
+function NLCUTIL_train_all() { // eslint-disable-line no-unused-vars
+
+    NLCUTIL_load_creds();
 
     var conf = NLCUTIL_load_config(CONFIG_SET);
 
@@ -1225,6 +1238,8 @@ function NLCUTIL_train_all() {
  * @throws      {Error}   サーバーエラーが発生しました
  */
 function NLCUTIL_delete_classifier(clf_no) {
+
+    var CREDS = NLCUTIL_load_creds();
 
     var conf = NLCUTIL_load_config(CONFIG_SET);
 
@@ -1290,21 +1305,21 @@ function NLCUTIL_delete_classifier(clf_no) {
 /**
  * 分類器1削除
  */
-function NLCUTIL_del_clf1() {
+function NLCUTIL_del_clf1() { // eslint-disable-line no-unused-vars
     NLCUTIL_delete_classifier(1);
 }
 
 /**
  * 分類器2削除
  */
-function NLCUTIL_del_clf2() {
+function NLCUTIL_del_clf2() { // eslint-disable-line no-unused-vars
     NLCUTIL_delete_classifier(2);
 }
 
 /**
  * 分類器3削除
  */
-function NLCUTIL_del_clf3() {
+function NLCUTIL_del_clf3() { // eslint-disable-line no-unused-vars
     NLCUTIL_delete_classifier(3);
 }
 // ----------------------------------------------------------------------------
@@ -1514,8 +1529,13 @@ var URI_DOMAIN = "https://gateway.watsonplatform.net";
 var URI_BASE = "/natural-language-classifier/api";
 var URI_APIVERSION = "v1";
 var EOL = '\r\n';
-// DataCollection
-// X-Watson-Learning-Opt-Out true
+/**
+ * DataCollection: X-Watson-Learning-Opt-Out
+ * @type {Boolean}
+ */
+var API_OPT_OUT = true;
+
+
 /**
  * @typedef {Object} APIResult 分類器情報
  * @property {Integer} status レスポンスコード
@@ -1547,6 +1567,7 @@ function NLCAPI_get_classifiers(p_username, p_password) {
     var options = {
         headers: {
             Authorization: " Basic " + Utilities.base64Encode(p_username + ":" + p_password),
+            "X-Watson-Learning-Opt-Out": API_OPT_OUT,
         },
         method: "get",
         contentType: "application/json",
@@ -1625,6 +1646,7 @@ function NLCAPI_post_classifiers(p_username, p_password, p_training_data, p_clas
     var options = {
         headers: {
             Authorization: " Basic " + Utilities.base64Encode(p_username + ":" + p_password),
+            "X-Watson-Learning-Opt-Out": API_OPT_OUT,
         },
         method: "post",
         contentType: 'multipart/form-data; boundary=' + boundary,
@@ -1690,6 +1712,7 @@ function NLCAPI_post_classify(p_username, p_password, p_classid, p_phrase) {
     var options = {
         headers: {
             Authorization: " Basic " + Utilities.base64Encode(p_username + ":" + p_password),
+            "X-Watson-Learning-Opt-Out": API_OPT_OUT,
         },
         method: "post",
         contentType: "application/json",
@@ -1730,7 +1753,7 @@ function NLCAPI_post_classify(p_username, p_password, p_classid, p_phrase) {
  * @param       {String} p_phrase   分類する文章
  * @return      {APIResult}            APIの実行結果
  */
-function NLCAPI_get_classify(p_username, p_password, p_classid, p_phrase) {
+function NLCAPI_get_classify(p_username, p_password, p_classid, p_phrase) { // eslint-disable-line no-unused-vars
 
     // URIビルド
     var resource = "classifiers";
@@ -1742,6 +1765,7 @@ function NLCAPI_get_classify(p_username, p_password, p_classid, p_phrase) {
     var options = {
         headers: {
             Authorization: " Basic " + Utilities.base64Encode(p_username + ":" + p_password),
+            "X-Watson-Learning-Opt-Out": API_OPT_OUT,
         },
         method: "get",
         contentType: "application/json",
@@ -1788,6 +1812,7 @@ function NLCAPI_delete_classifier(p_username, p_password, p_classid) {
     var options = {
         headers: {
             Authorization: " Basic " + Utilities.base64Encode(p_username + ":" + p_password),
+            "X-Watson-Learning-Opt-Out": API_OPT_OUT,
         },
         method: "delete",
         contentType: "application/json",
@@ -1835,6 +1860,7 @@ function NLCAPI_get_classifier(p_username, p_password, p_classid) {
     var options = {
         headers: {
             Authorization: " Basic " + Utilities.base64Encode(p_username + ":" + p_password),
+            "X-Watson-Learning-Opt-Out": API_OPT_OUT,
         },
         method: "get",
         contentType: "application/json",

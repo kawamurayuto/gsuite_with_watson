@@ -30,9 +30,9 @@
 /* globals CONF_INDEX */
 /* globals CLFNAME_PREFIX */
 /* globals CLF_SEP */
-/* globals CREDS */
 /* globals NOTIF_OPT */
 /* globals NLCUTIL_norm_text */
+/* globals NLCUTIL_load_creds */
 /* globals NLCUTIL_open_dialog */
 /* globals NLCUTIL_log_train */
 /* globals NLCUTIL_clf_vers */
@@ -350,7 +350,7 @@ function RSSUTIL_load_rss(feed_set, rss_set) {
 /**
  * 全てのRSSフィードを取得してシートに追記する
  */
-function RSSUTIL_crawl() {
+function RSSUTIL_crawl() { // eslint-disable-line no-unused-vars
 
     Logger.log("### RSSUTIL_crawl");
 
@@ -522,6 +522,8 @@ function RSSUTIL_train_set(clf_no) {
 
     Logger.log("### RSSUTIL_train_set", clf_no);
 
+    var CREDS = NLCUTIL_load_creds();
+
     var conf = RSSUTIL_load_config(CONFIG_SET);
 
     var train_set = {
@@ -555,7 +557,9 @@ function RSSUTIL_train_set(clf_no) {
 /**
  * イベント実行用学習処理
  */
-function RSSUTIL_train_all() {
+function RSSUTIL_train_all() { // eslint-disable-line no-unused-vars
+
+    var CREDS = NLCUTIL_load_creds();
 
     var conf = RSSUTIL_load_config(CONFIG_SET);
 
@@ -729,6 +733,8 @@ function RSSUTIL_classify_set(clf_no) {
 
     Logger.log("### RSSUTIL_classify_set " + clf_no);
 
+    var CREDS = NLCUTIL_load_creds();
+
     var conf = RSSUTIL_load_config(CONFIG_SET);
 
     var notif_conf = {
@@ -758,6 +764,7 @@ function RSSUTIL_classify_set(clf_no) {
         restime_col: conf.sheet_conf.restime_col[clf_no - 1],
         clf_name: CLFNAME_PREFIX + String(clf_no),
         notif_set: notif_set,
+        notif_opt: conf.notif_conf.option,
     };
 
     var test_result = RSSUTIL_classify(test_set, CREDS.username, CREDS.password);
@@ -780,9 +787,11 @@ function RSSUTIL_classify_set(clf_no) {
  * @throws      {Error}  データシートが不明です
  * @throws      {Error} 学習・分類対象が不正です
  */
-function RSSUTIL_classify_all() {
+function RSSUTIL_classify_all() { // eslint-disable-line no-unused-vars
 
     Logger.log("### RSSUTIL_classify_all");
+
+    var CREDS = NLCUTIL_load_creds();
 
     var conf = RSSUTIL_load_config(CONFIG_SET);
 
@@ -834,6 +843,7 @@ function RSSUTIL_classify_all() {
         end_row: -1,
         text_col: conf.sheet_conf.train_column,
         notif_set: notif_set,
+        notif_opt: conf.notif_conf.option,
     };
 
     var clf_ids = [];
@@ -892,7 +902,7 @@ function RSSUTIL_classify_all() {
     var hasError = 0;
     var nlc_res;
     var err_res;
-    var row_cnt = 0;
+    //var row_cnt = 0;
     var res_rows = [0, 0, 0];
     for (var cnt = 0; cnt < entries.length; cnt += 1) {
 
@@ -963,11 +973,13 @@ function RSSUTIL_classify_all() {
             }
         }
 
-        if (updates > 0) {
-            row_cnt += 1;
-            var record = sheet.getRange(conf.sheet_conf.start_row + cnt, 1, 1, lastCol)
-                .getValues();
-            NLCUTIL_check_notify(notif_set, record[0], upd_flg);
+        if (test_set.notif_opt === NOTIF_OPT.ON) {
+            if (updates > 0) {
+                //row_cnt += 1;
+                var record = sheet.getRange(conf.sheet_conf.start_row + cnt, 1, 1, lastCol)
+                    .getValues();
+                NLCUTIL_check_notify(notif_set, record[0], upd_flg);
+            }
         }
     }
 
@@ -1018,42 +1030,42 @@ function RSSUTIL_classify_all() {
 /**
  * 分類器1の学習
  */
-function RSSUTIL_train_no1() {
+function RSSUTIL_train_no1() { // eslint-disable-line no-unused-vars
     RSSUTIL_train_set(1);
 }
 
 /**
  * 分類器2の学習
  */
-function RSSUTIL_train_no2() {
+function RSSUTIL_train_no2() { // eslint-disable-line no-unused-vars
     RSSUTIL_train_set(2);
 }
 
 /**
  * 分類器3の学習
  */
-function RSSUTIL_train_no3() {
+function RSSUTIL_train_no3() { // eslint-disable-line no-unused-vars
     RSSUTIL_train_set(3);
 }
 
 /**
  * 分類器1の分類
  */
-function RSSUTIL_classify_no1() {
+function RSSUTIL_classify_no1() { // eslint-disable-line no-unused-vars
     RSSUTIL_classify_set(1);
 }
 
 /**
  * 分類器2の分類
  */
-function RSSUTIL_classify_no2() {
+function RSSUTIL_classify_no2() { // eslint-disable-line no-unused-vars
     RSSUTIL_classify_set(2);
 }
 
 /**
  * 分類器3の分類
  */
-function RSSUTIL_classify_no3() {
+function RSSUTIL_classify_no3() { // eslint-disable-line no-unused-vars
     RSSUTIL_classify_set(3);
 }
 // ----------------------------------------------------------------------------
