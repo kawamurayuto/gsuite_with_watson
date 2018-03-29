@@ -14,6 +14,7 @@ var answerNumber = 1;
  * @param  {String} p_question 質問
  */
 function askwatson(p_question) {
+    // (3) 送信ボタンクリック時の処理
 
     $('#QuestionText')
         .val("");
@@ -75,7 +76,7 @@ function askwatson(p_question) {
                 .show()
                 .prop("disabled", false);
         })
-        .CHATUTIL_send_message(l_question);
+        .CHATUTIL_send_message(l_question); // (4) Watson に入力値を渡す
 }
 
 

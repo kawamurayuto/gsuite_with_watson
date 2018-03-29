@@ -153,6 +153,7 @@ function include(filename) { // eslint-disable-line no-unused-vars
  * @return {Object}   HTML
  */
 function doGet() { // eslint-disable-line no-unused-vars
+    // (1) 画面表示時の処理
 
     var conf = CHATUTIL_load_config(CONFIG_SET);
 
@@ -260,5 +261,7 @@ function onOpen() { // eslint-disable-line no-unused-vars
  * テスト用メッセージ送信
  */
 function test_send() { // eslint-disable-line no-unused-vars
+    // ※ デバッグ機能のブレークポイントをここに設定して、処理を追います。
+
     CHATUTIL_send_message("電話番号を教えて");
 }
