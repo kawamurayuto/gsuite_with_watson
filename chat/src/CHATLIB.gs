@@ -62,7 +62,7 @@ var CONV_INDEX = {
  * LINE応答メッセージ用URL
  * @type {String}
  */
-var LINE_REPLY_URL = 'https://api.line.me/v2/bot/message/reply'; // eslint-disable-line no-unused-vars
+var WORKCHAT_REPLY_URL = 'https://graph.facebook.com/v2.6/me/messages'; // eslint-disable-line no-unused-vars
 // ----------------------------------------------------------------------------
 
 
@@ -88,10 +88,10 @@ function CHATUTIL_load_creds() { // eslint-disable-line no-unused-vars
 
     var creds = {};
 
-    creds['channel_access_token'] = scriptProps.getProperty('CHANNEL_ACCESS_TOKEN');
+    creds['channel_access_token'] = scriptProps.getProperty('WORKPLACE_ACCESS_TOKEN');
 
     if (creds.channel_access_token === null) {
-        throw new Error('LINEクレデンシャルが不明です');
+        throw new Error('Workplace アクセストークンが設定されていません');
     }
 
     return creds;

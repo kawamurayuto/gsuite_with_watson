@@ -149,31 +149,23 @@ function include(filename) { // eslint-disable-line no-unused-vars
 
 // ----------------------------------------------------
 /**
- * HTMLサービス
- * @return {Object}   HTML
+ * WorkChat Handling Verification Requests
+ *
+ * @see https://developers.facebook.com/docs/workplace/integrations/custom-integrations/webhooks
+ * @todo check verify_token 
+ * @return {Object}   TEXT
  */
-function doGet() { // eslint-disable-line no-unused-vars
-
-    var conf = CHATUTIL_load_config(CONFIG_SET);
-
-    var web = HtmlService.createTemplateFromFile('index');
-    web.data = {
-        title: "Chat Bot Demo",
-        bot_name: "名無しのボット君",
-        user_name: "あなた",
-        start_msg: conf.sheet_conf.start_msg,
-        avatar_url: conf.sheet_conf.avatar_url,
-    };
-
-    return web.evaluate()
-        .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+function doGet(e) { // eslint-disable-line no-unused-vars
+    return ContentService
+        .createTextOutput(e.parameter['hub.challenge'])
+        .setMimeType(ContentService.MimeType.TEXT);
 }
 // ----------------------------------------------------
 
 
 // ----------------------------------------------------
 /**
- * LINE応答処理
+ * WorkChat応答処理
  * @param  {Event} e イベントパラメータ
  */
 function doPost(e) { // eslint-disable-line no-unused-vars
@@ -182,29 +174,22 @@ function doPost(e) { // eslint-disable-line no-unused-vars
 
     var contents = JSON.parse(e.postData.contents);
 
-    var event = contents.events[0];
+    var messaging = contents.entry && contents.entry[0].messaging[0];
 
-    var reply_token = event.replyToken;
-    if (typeof reply_token === 'undefined') {
+    if (typeof messaging === 'undefined') {
         return;
     }
 
     var res_msg = "";
-    if (event.type === "follow") {
-        res_msg = conf.sheet_conf.start_msg;
-        CHATUTIL_store_reply('#FOLLOW', res_msg);
-    } else {
-        if (event.message.type === "text") {
-            var user_message = event.message.text;
-            var res = CHATUTIL_send_message(user_message);
-            res_msg = res.response[0];
-        } else {
-            res_msg = conf.sheet_conf.giveup_msg;
-            CHATUTIL_store_reply('#UNDEFINED', res_msg);
-        }
-    }
 
-    var url = LINE_REPLY_URL;
+    if (false) { // TODO: connect to watson
+        var user_message = event.message.text;
+        var res = CHATUTIL_send_message(user_message);
+        res_msg = res.response[0];
+    } else {
+        res_msg = conf.sheet_conf.giveup_msg;
+        CHATUTIL_store_reply('#UNDEFINED', res_msg);
+    }
 
     var CREDS;
     try {
@@ -214,19 +199,21 @@ function doPost(e) { // eslint-disable-line no-unused-vars
         return;
     }
 
+    var url = WORKCHAT_REPLY_URL + '?access_token=' + encodeURIComponent(CREDS.channel_access_token);
+
     try {
         UrlFetchApp.fetch(url, {
             headers: {
                 "Content-Type": 'application/json; charset=UTF-8',
-                Authorization: 'Bearer ' + CREDS.channel_access_token,
             },
             method: 'post',
             payload: JSON.stringify({
-                replyToken: reply_token,
-                messages: [{
-                    type: 'text',
-                    text: res_msg,
-                }],
+                recipient: {
+                    id: messaging.sender.id
+                },
+                message: {
+                    text: res_msg
+                }
             }),
         });
     } catch (err) {
